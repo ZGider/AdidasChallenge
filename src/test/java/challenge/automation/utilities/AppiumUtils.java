@@ -2,20 +2,15 @@ package challenge.automation.utilities;
 
 import io.appium.java_client.MobileElement;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 public class AppiumUtils {
 
@@ -38,9 +33,9 @@ public class AppiumUtils {
         return target;
     }
 
-    public static String getDate(){
+    public static String getDate() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        String dateofDay = timestamp.toString().substring(0,16);
+        String dateofDay = timestamp.toString().substring(0, 16);
 
         return dateofDay;
     }
@@ -67,23 +62,7 @@ public class AppiumUtils {
         }
     }
 
-    //===============Explicit Wait==============//
-    public static MobileElement waitForVisibility(MobileElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.driver, timeout);
-        return (MobileElement) wait.until(ExpectedConditions.visibilityOf(element));
-    }
 
-    //==========Return a list of string given a list of Mobile Element====////
-    public static List<String> getElementsText(List<MobileElement> list) {
-        List<String> elemTexts = new ArrayList<>();
-        for (MobileElement el : list) {
-            if (!el.getText().isEmpty()) {
-                elemTexts.add(el.getText());
-            }
-        }
-
-        return elemTexts;
-    }
 
 //    public static MobileElement scrollTo(String visibleText) {
 //        return Driver.get().findElementByAndroidUIAutomator(
@@ -94,16 +73,4 @@ public class AppiumUtils {
 //                );
 //    }
 
-    public static void clickListElementByText(List<MobileElement> list, String elText) {
-        List<String> txtList = getElementsText(list);
-        //make sure that the list has element
-        Assert.assertTrue(elText + " does not exist", txtList.contains(elText));
-        for (MobileElement e : list) {
-            if (!e.getText().isEmpty() && e.getText().equals(elText)) {
-                e.click();
-                //exit loop after clicking the desired element
-                return;
-            }
-        }
-    }
 }
