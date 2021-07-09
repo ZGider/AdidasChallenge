@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +36,26 @@ public class AppiumUtils {
         // save the screenshot to the path given
         FileUtils.copyFile(source, finalDestination);
         return target;
+    }
+
+    public static String getDate(){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String dateofDay = timestamp.toString().substring(0,16);
+
+        return dateofDay;
+    }
+
+    /**
+     * Performs a pause
+     *
+     * @param seconds
+     */
+    public static void waitFor(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean isElementVisible(MobileElement el) {
@@ -65,7 +86,7 @@ public class AppiumUtils {
     }
 
 //    public static MobileElement scrollTo(String visibleText) {
-//        return Driver.driver.findElementByAndroidUIAutomator(
+//        return Driver.get().findElementByAndroidUIAutomator(
 //                        "new UiScrollable(" +
 //                                "new UiSelector().scrollable(true).instance(0))" +
 //                                ".scrollIntoView(new UiSelector()" +
@@ -73,10 +94,7 @@ public class AppiumUtils {
 //                );
 //    }
 
-    public static void clickListElementByText(
-            List<MobileElement> list,
-            String elText
-    ) {
+    public static void clickListElementByText(List<MobileElement> list, String elText) {
         List<String> txtList = getElementsText(list);
         //make sure that the list has element
         Assert.assertTrue(elText + " does not exist", txtList.contains(elText));

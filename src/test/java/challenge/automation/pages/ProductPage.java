@@ -22,6 +22,41 @@ public class ProductPage {
         PageFactory.initElements(new AppiumFieldDecorator(Driver.driver), this);
     }
 
+    @AndroidFindBy(id = "com.example.challenge:id/addReview")
+    public MobileElement addReviewBtn;
+
+    @AndroidFindBy(id = "com.example.challenge:id/reviewDetails")
+    public MobileElement reviewInputBox;
+
+
+
+    @AndroidFindBy(id = "com.example.challenge:id/reviewNumber")
+    public MobileElement rateDropdown;
+
+    @AndroidFindBy(xpath= "(//*[@resource-id='android:id/text1'])[2]")
+    public MobileElement rateOption1;
+
+    @AndroidFindBy(id = "com.example.challenge:id/saveReview")
+    public MobileElement saveReviewBtn;
+
+    @AndroidFindBy(id = "com.example.challenge:id/productImage")
+    public MobileElement productDetailImg;
+
+    @AndroidFindAll(
+            @AndroidBy(className = "android.widget.CheckedTextView")
+    )
+    public List<MobileElement> reviewNumberOptions;
+
+
+
+
+
+
+
+
+
+
+
     @AndroidFindBy(id = "com.example.challenge:id/goBack")
     MobileElement goBackBtn;
 
@@ -37,22 +72,13 @@ public class ProductPage {
     @AndroidFindBy(id = "com.example.challenge:id/reviewsRecycler")
     MobileElement reviewsRecycler;
 
-    @AndroidFindBy(id = "com.example.challenge:id/addReview")
-    MobileElement addReview;
 
-    @AndroidFindBy(id = "com.example.challenge:id/reviewDetails")
-    MobileElement reviewDetailsInput;
 
-    @AndroidFindBy(id = "com.example.challenge:id/reviewNumber")
-    MobileElement reviewNumberDropdown;
 
-    @AndroidFindAll(
-            @AndroidBy(className = "android.widget.CheckedTextView")
-    )
-    List<MobileElement> reviewNumberOptions;
 
-    @AndroidFindBy(id = "com.example.challenge:id/saveReview")
-    MobileElement saveReview;
+
+
+
 
 
 //    public void clickProductByName(String productName) {
@@ -81,16 +107,12 @@ public class ProductPage {
     }
 
     public void addReview(String reviewTxt, String reviewNumber) {
-        boolean isVisible = AppiumUtils.isElementVisible(addReview);
-        Assert.assertTrue(isVisible);
 
-        addReview.click();
-        reviewDetailsInput.sendKeys(reviewTxt);
 
-        reviewNumberDropdown.click();
+
         AppiumUtils.clickListElementByText(reviewNumberOptions, reviewNumber);
 
-        saveReview.click();
+
     }
 
     public void goBack() {
