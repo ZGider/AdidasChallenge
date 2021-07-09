@@ -27,7 +27,7 @@ public class ReviewWriting extends TestBase {
         */
 
         HomePage homePage = new HomePage();
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         homePage.products.get(1).click();
 
 
