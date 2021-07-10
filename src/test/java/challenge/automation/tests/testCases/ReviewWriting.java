@@ -18,7 +18,7 @@ public class ReviewWriting extends TestBase {
     public String reviewText = "The Last Review " + AppiumUtils.getDate();
 
     @Test
-    public void addReview() throws InterruptedException {
+    public void addReview() {
         /*Test Case 2.1:
 
         User should be navigated to the review page by clicking the "Add Review" Button
@@ -35,19 +35,22 @@ public class ReviewWriting extends TestBase {
 
 
         */
+        extentLogger = report.createTest("2.1 User");
+
         HomePage homePage = new HomePage();
-        Thread.sleep(6000);
+        AppiumUtils.waitFor(5);
+        AppiumUtils.waitForVisibility(homePage.products.get(1), 10);
         homePage.products.get(1).click();
+        extentLogger.info("Click First Product");
 
         ProductPage productPage = new ProductPage();
-        Thread.sleep(3000);
+        AppiumUtils.waitForVisibility(productPage.addReviewBtn, 5);
         productPage.addReviewBtn.click();
-        Thread.sleep(3000);
-        Assert.assertTrue(productPage.reviewInputBox.isDisplayed(),"Verify that user is on the Review Page");
 
+        boolean isDisplayed = AppiumUtils.isElementVisible(productPage.reviewInputBox);
 
-
-
+        Assert.assertTrue(isDisplayed,"Verify that user is on the Review Page");
+        extentLogger.info("PASS : ");
     }
 
     @Test
@@ -66,10 +69,12 @@ public class ReviewWriting extends TestBase {
         2. Enter a free text into the review InputBox
         3. Rate the the product by using the Rating Dropdown
         4. Click "Save" Button
-        5. Verify that your in the Product page
-
+        5. Verify that you are in the Product page
 
         */
+
+        extentLogger = report.createTest("2.2 User");
+
         HomePage homePage = new HomePage();
         Thread.sleep(6000);
         homePage.products.get(1).click();
@@ -92,7 +97,7 @@ public class ReviewWriting extends TestBase {
 
         Assert.assertTrue(productPage.productDetailImg.isDisplayed(),"Verify that user is in the Product Page");
 
-
+        extentLogger.info("PASS : ");
 
 
     }
@@ -115,33 +120,34 @@ public class ReviewWriting extends TestBase {
 
         */
 
+        extentLogger = report.createTest("2.3 User");
+
         HomePage homePage = new HomePage();
-        Thread.sleep(6000);
-        homePage.products.get(1).click();
+
+//        homePage.products.get(2).click();
+        AppiumUtils.scrollTo("Noisy Shame").click();
 
         ProductPage productPage = new ProductPage();
-        Thread.sleep(3000);
+
         productPage.addReviewBtn.click();
-        Thread.sleep(3000);
+
         productPage.reviewInputBox.sendKeys(reviewText);
 
         String reviewListText = reviewText;
 
-        Thread.sleep(2000);
+
         productPage.rateDropdown.click();
-        Thread.sleep(1000);
+
         productPage.rateOption1.click();
-        Thread.sleep(1000);
+
         productPage.saveReviewBtn.click();
-        Thread.sleep(1000);
 
 
+        MobileElement lastReview = AppiumUtils.scrollTo(reviewText);
 
+        Assert.assertNotNull(lastReview);
 
-
-
-
-
+        extentLogger.info("PASS : ");
     }
 
 }

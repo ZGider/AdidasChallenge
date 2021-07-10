@@ -72,21 +72,21 @@ public class TestBase {
 
     @BeforeMethod
     public void setUpMethod() throws MalformedURLException {
-
-    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
-    desiredCapabilities.setCapability(MobileCapabilityType.VERSION, "7.0");
-    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_2");
+        Driver.get();
+//    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+//    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
+//    desiredCapabilities.setCapability(MobileCapabilityType.VERSION, "7.0");
+//    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_2");
 
     //if the application will be installed by an apk file we show the filepath
-            desiredCapabilities.setCapability("app", appFilePath);
+//            desiredCapabilities.setCapability("app", appFilePath);
 
     //if the application is already installed, then we use the codes below to run the app
 
 //            desiredCapabilities.setCapability("appActivity","com.example.challenge.MainActivity");
 //            desiredCapabilities.setCapability("appPackage","com.example.challenge");
 
-    driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"),desiredCapabilities);
+//    driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"),desiredCapabilities);
 
     }
 
@@ -94,14 +94,30 @@ public class TestBase {
     @AfterMethod
     public void tearDownMethod(ITestResult result) throws InterruptedException, IOException {
         //if test failed
+        System.out.println("result.getStatus() = " + result.getStatus());
+        System.out.println("ITestResult.FAILURE = " + ITestResult.FAILURE);
+
         if(result.getStatus()== ITestResult.FAILURE){
+
+            System.out.println("result.getStatus()1 = " + result.getStatus());
+
+//            //record the name of the failed test case
+//            extentLogger.fail(result.getName());
+
+            //take the screenshot and return location of the screenshot
+            System.out.println("result.getName() = " + result.getName());
+
+            String screenshotPath = AppiumUtils.getScreenshot(result.getName());
 
             //record the name of the failed test case
             extentLogger.fail(result.getName());
 
-            //take the screenshot and return location of the screenshot
-            String screenshotPath = AppiumUtils.getScreenshot(result.getName());
-            extentLogger.addScreenCaptureFromPath(screenshotPath);
+            //To add it in the extent report
+            //extentLogger.addScreenCaptureFromPath(screenshotPath);
+
+
+
+
 
             //capture the exception
             extentLogger.fail(result.getThrowable());
@@ -112,7 +128,6 @@ public class TestBase {
         }
 
         //Close driver
-        Thread.sleep(10000);
         Driver.closeDriver();
 
     }

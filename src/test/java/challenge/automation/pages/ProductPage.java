@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ProductPage {
     public ProductPage() {
-        PageFactory.initElements(new AppiumFieldDecorator(Driver.driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(Driver.get()), this);
     }
 
     @AndroidFindBy(id = "com.example.challenge:id/addReview")
