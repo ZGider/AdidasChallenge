@@ -17,7 +17,7 @@ public class ReviewWriting extends TestBase {
 
     public String reviewText = "The Last Review " + AppiumUtils.getDate();
 
-    @Test
+    @Test(priority = 0)
     public void addReview() {
         /*Test Case 2.1:
 
@@ -35,26 +35,24 @@ public class ReviewWriting extends TestBase {
 
 
         */
-        extentLogger = report.createTest("2.1 User");
+        extentLogger = report.createTest("2.1 User should be navigated to the review page by clicking the Add Review Button");
 
         HomePage homePage = new HomePage();
-        AppiumUtils.waitFor(5);
-        AppiumUtils.waitForVisibility(homePage.products.get(1), 10);
         homePage.products.get(1).click();
-        extentLogger.info("Click First Product");
+        extentLogger.info("Click The First Product In the Homepage");
 
         ProductPage productPage = new ProductPage();
-        AppiumUtils.waitForVisibility(productPage.addReviewBtn, 5);
         productPage.addReviewBtn.click();
+        extentLogger.info("Click Add Review Button");
 
         boolean isDisplayed = AppiumUtils.isElementVisible(productPage.reviewInputBox);
 
         Assert.assertTrue(isDisplayed,"Verify that user is on the Review Page");
-        extentLogger.info("PASS : ");
+        extentLogger.info("PASS : 2.1 User should be navigated to the review page by clicking the Add Review Button");
     }
 
-    @Test
-    public void writeReview() throws InterruptedException {
+    @Test(priority = 1)
+    public void writeReview(){
         /*Test Case 2.2:
 
         User should be able to write a review in the "Review InputBox" and rate the product
@@ -73,36 +71,38 @@ public class ReviewWriting extends TestBase {
 
         */
 
-        extentLogger = report.createTest("2.2 User");
+        extentLogger = report.createTest("2.2 User should be able to write a review in the Review InputBox and rate the product");
 
         HomePage homePage = new HomePage();
-        Thread.sleep(6000);
         homePage.products.get(1).click();
+        extentLogger.info("Click The First Product In the Homepage");
 
         ProductPage productPage = new ProductPage();
-        Thread.sleep(3000);
         productPage.addReviewBtn.click();
-        Thread.sleep(3000);
+        extentLogger.info("Click Add Review Button");
+
         productPage.reviewInputBox.sendKeys(reviewText);
+        extentLogger.info("Enter the Review Text to the Review Input Box");
 
-        WebElement reviewListOption = driver.findElement(By.xpath("//*[@class='' and @text = '"+ reviewText +"'"));
-
-        Thread.sleep(2000);
         productPage.rateDropdown.click();
-        Thread.sleep(1000);
+        extentLogger.info("Click Review Rating Dropdown");
+
         productPage.rateOption1.click();
-        Thread.sleep(1000);
+        extentLogger.info("Click one of the Review Rate Options");
+
         productPage.saveReviewBtn.click();
-        Thread.sleep(1000);
+        extentLogger.info("Click Save Button");
 
-        Assert.assertTrue(productPage.productDetailImg.isDisplayed(),"Verify that user is in the Product Page");
+        boolean isDisplayed = AppiumUtils.isElementVisible(productPage.productDetailImg);
 
-        extentLogger.info("PASS : ");
+        Assert.assertTrue(isDisplayed,"Verify that user is in the Product Page");
+
+        extentLogger.info("PASS : 2.2 User should be able to write a review in the Review InputBox and rate the product ");
 
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void listReview() throws InterruptedException {
         /*Test Case 2.3:
 
@@ -120,34 +120,33 @@ public class ReviewWriting extends TestBase {
 
         */
 
-        extentLogger = report.createTest("2.3 User");
+        extentLogger = report.createTest("2.3 The review written by the user should have been added and displayed in the end of the review list");
 
-        HomePage homePage = new HomePage();
-
-//        homePage.products.get(2).click();
+        //HomePage homePage = new HomePage();
         AppiumUtils.scrollTo("Noisy Shame").click();
+        extentLogger.info("Click The First Product In the Homepage");
 
         ProductPage productPage = new ProductPage();
-
         productPage.addReviewBtn.click();
+        extentLogger.info("Click Add Review Button");
 
         productPage.reviewInputBox.sendKeys(reviewText);
-
-        String reviewListText = reviewText;
-
+        extentLogger.info("Enter the Review Text to the Review Input Box");
 
         productPage.rateDropdown.click();
+        extentLogger.info("Click Review Rating Dropdown");
 
         productPage.rateOption1.click();
+        extentLogger.info("Click one of the Review Rate Options");
 
         productPage.saveReviewBtn.click();
-
+        extentLogger.info("Click Save Button");
 
         MobileElement lastReview = AppiumUtils.scrollTo(reviewText);
 
         Assert.assertNotNull(lastReview);
 
-        extentLogger.info("PASS : ");
+        extentLogger.info("PASS : 2.3 The review written by the user should have been added and displayed in the end of the review list ");
     }
 
 }

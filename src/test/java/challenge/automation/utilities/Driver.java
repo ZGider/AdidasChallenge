@@ -17,9 +17,8 @@ public class Driver {
 
     public static AppiumDriver get() {
         if (driver == null) {
+
             String platform = challenge.automation.utilities.ConfigurationReader.get("platformName");
-
-
 
             switch (platform) {
 
@@ -29,6 +28,8 @@ public class Driver {
                     desiredCapabilities.setCapability("platformName", "Android");
                     desiredCapabilities.setCapability("platformVersion", "7.0");
                     desiredCapabilities.setCapability("deviceName", "Pixel_2");
+
+                    //if we want to run an apk file then we use the line below
                     //desiredCapabilities.setCapability("app", challenge.automation.utilities.ConfigurationReader.get("android.app.url"));
 
                     // if the application is already installed, then we use the codes below to run the app

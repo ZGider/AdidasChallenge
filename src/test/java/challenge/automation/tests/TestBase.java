@@ -73,51 +73,24 @@ public class TestBase {
     @BeforeMethod
     public void setUpMethod() throws MalformedURLException {
         Driver.get();
-//    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-//    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
-//    desiredCapabilities.setCapability(MobileCapabilityType.VERSION, "7.0");
-//    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_2");
-
-    //if the application will be installed by an apk file we show the filepath
-//            desiredCapabilities.setCapability("app", appFilePath);
-
-    //if the application is already installed, then we use the codes below to run the app
-
-//            desiredCapabilities.setCapability("appActivity","com.example.challenge.MainActivity");
-//            desiredCapabilities.setCapability("appPackage","com.example.challenge");
-
-//    driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"),desiredCapabilities);
-
     }
 
-    //ITestReslt clas describes the result of a test in TestNG
+    //ITestReslt class describes the result of a test in TestNG
     @AfterMethod
     public void tearDownMethod(ITestResult result) throws InterruptedException, IOException {
-        //if test failed
-        System.out.println("result.getStatus() = " + result.getStatus());
-        System.out.println("ITestResult.FAILURE = " + ITestResult.FAILURE);
 
+        //if test failed
         if(result.getStatus()== ITestResult.FAILURE){
 
-            System.out.println("result.getStatus()1 = " + result.getStatus());
-
-//            //record the name of the failed test case
-//            extentLogger.fail(result.getName());
 
             //take the screenshot and return location of the screenshot
-            System.out.println("result.getName() = " + result.getName());
-
             String screenshotPath = AppiumUtils.getScreenshot(result.getName());
 
             //record the name of the failed test case
             extentLogger.fail(result.getName());
 
-            //To add it in the extent report
-            //extentLogger.addScreenCaptureFromPath(screenshotPath);
-
-
-
-
+            // To add it in the extent report
+            extentLogger.addScreenCaptureFromPath(screenshotPath);
 
             //capture the exception
             extentLogger.fail(result.getThrowable());
