@@ -122,9 +122,8 @@ public class ReviewWriting extends TestBase {
 
         extentLogger = report.createTest("2.3 The review written by the user should have been added and displayed in the end of the review list");
 
-        //HomePage homePage = new HomePage();
         AppiumUtils.scrollTo("Noisy Shame").click();
-        extentLogger.info("Click The First Product In the Homepage");
+        extentLogger.info("Click One of the Products In the Homepage");
 
         ProductPage productPage = new ProductPage();
         productPage.addReviewBtn.click();
@@ -143,8 +142,7 @@ public class ReviewWriting extends TestBase {
         extentLogger.info("Click Save Button");
 
         MobileElement lastReview = AppiumUtils.scrollTo(reviewText);
-
-        Assert.assertNotNull(lastReview);
+        Assert.assertNotNull(lastReview, "Verify that the last written Review is displayed in the review list");
 
         extentLogger.info("PASS : 2.3 The review written by the user should have been added and displayed in the end of the review list ");
     }
